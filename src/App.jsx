@@ -3,18 +3,22 @@ import GameBoard from "./components/GameBoard.jsx";
 import Player from "./components/player.jsx";
 import Log from "./components/Log.jsx";
 
+function switchPlayer(gameTurns) {
+  let currentPlayer = "X";
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+  return currentPlayer;
+}
+
 function App() {
-  const [active, setActive] = useState("X");
+  // const [active, setActive] = useState("X");
   const [gameTurns, setGameTurns] = useState([]);
 
+  const active = switchPlayer(gameTurns);
   function handleActive(rowIndex, colIndex) {
-    setActive((curSy) => (curSy === "O" ? "X" : "O"));
     setGameTurns((prevTurns) => {
-      let currentPlayer = "X";
-      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
-        currentPlayer = "O";
-      }
-
+      let currentPlayer = switchPlayer(prevTurns);
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
         ...prevTurns,
@@ -32,7 +36,7 @@ function App() {
         </ol>
         <GameBoard onActive={handleActive} turns={gameTurns} />
       </div>
-      <Log />
+      <Log turns={gameTurns} />
     </main>
   );
 }
