@@ -6,18 +6,14 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard({ onActive, isActive }) {
-  // const [gameBoard, setGameBoard] = useState(initialGameBoard);
+export default function GameBoard({ onActive, turns }) {
+  let gameBoard = initialGameBoard;
 
-  // function handleGameBoard(indRow, indCol) {
-  //   setGameBoard((gameBoard) => {
-  //     const updatedBoard = [...gameBoard.map((innerArr) => [...innerArr])];
-  //     updatedBoard[indRow][indCol] = isActive;
-  //     return updatedBoard;
-  //   });
-  //   onActive();
-  // }
-
+  for (const turn of turns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+    gameBoard[row][col] = player;
+  }
   return (
     <ol id="game-board">
       {gameBoard.map((row, indRow) => (
@@ -25,7 +21,9 @@ export default function GameBoard({ onActive, isActive }) {
           <ol>
             {row.map((playerSymbol, indCol) => (
               <li key={indCol}>
-                <button onClick={onActive}>{playerSymbol}</button>
+                <button onClick={() => onActive(indRow, indCol)}>
+                  {playerSymbol}
+                </button>
               </li>
             ))}
           </ol>

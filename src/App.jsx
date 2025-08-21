@@ -30,7 +30,7 @@ function App() {
           <Player playerName="Player 1" symbol="O" isActive={active === "O"} />
           <Player playerName="Player 2" symbol="X" isActive={active === "X"} />
         </ol>
-        <GameBoard onActive={handleActive} isActive={active} />
+        <GameBoard onActive={handleActive} turns={gameTurns} />
       </div>
       <Log />
     </main>
